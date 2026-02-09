@@ -71,7 +71,25 @@
       transform: translateX(-50%);
       top: 0;
     }
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp linear forwards;
+  opacity: 0.8;
+  pointer-events: none;
+}
 
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-110vh) scale(1.5);
+    opacity: 0;
+  }
+}
     .message {
       display: none;
       font-size: 20px;
@@ -83,7 +101,7 @@
 <body>
 
   <div class="card">
-    <h1>Will you be my Valentine? 💘</h1>
+    <h1>Srushti, will you be my Valentine? 💘</h1>
 
     <div class="buttons">
       <button id="no">No 🙃</button>
@@ -91,7 +109,7 @@
     </div>
 
     <div class="message" id="message">
-      YAYYY 💕 I knew you’d say yes 😌
+      YAYYY 💕 I knew you’d say yes 😌💘
     </div>
   </div>
 
@@ -121,7 +139,24 @@
   yesBtn.addEventListener("click", () => {
     message.style.display = "block";
     sound.play();
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "❤️";
 
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = 4 + Math.random() * 3 + "s";
+  heart.style.fontSize = 16 + Math.random() * 20 + "px";
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 7000);
+}
+
+// Create hearts continuously
+setInterval(createHeart, 500);
     confetti({
       particleCount: 180,
       spread: 80,
