@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <title>Be My Valentine 💖</title>
+
+  <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -14,15 +17,24 @@
       align-items: center;
       margin: 0;
     }
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
 
+.shake {
+  animation: shake 0.4s;
+}
     .card {
       background: white;
       padding: 40px;
       border-radius: 20px;
       text-align: center;
       box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-      position: relative;
-      width: 300px;
+      width: 320px;
     }
 
     h1 {
@@ -83,25 +95,39 @@
     </div>
   </div>
 
-  <script>
-    const noBtn = document.getElementById("no");
-    const yesBtn = document.getElementById("yes");
-    const message = document.getElementById("message");
+  <!-- Sound -->
+  <audio id="yesSound">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-melodic-bonus-collect-1938.mp3" type="audio/mpeg">
+  </audio>
 
-    noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * 200 - 100;
-      const y = Math.random() * 100 - 50;
-      noBtn.style.transform = `translate(${x}px, ${y}px)`;
-    });
+ <script>
+  const noBtn = document.getElementById("no");
+  const yesBtn = document.getElementById("yes");
+  const message = document.getElementById("message");
+  const sound = document.getElementById("yesSound");
+  const card = document.querySelector(".card");
 
-    yesBtn.addEventListener("click", () => {
-      message.style.display = "block";
-      confetti({
-        particleCount: 150,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
+  noBtn.addEventListener("mouseover", () => {
+    // Shake the card
+    card.classList.add("shake");
+    setTimeout(() => card.classList.remove("shake"), 400);
+
+    // Move the "No" button
+    const x = Math.random() * 200 - 100;
+    const y = Math.random() * 100 - 50;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  });
+
+  yesBtn.addEventListener("click", () => {
+    message.style.display = "block";
+    sound.play();
+
+    confetti({
+      particleCount: 180,
+      spread: 80,
+      origin: { y: 0.6 }
     });
+  });
   </script>
 
 </body>
