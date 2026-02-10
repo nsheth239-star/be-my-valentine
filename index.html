@@ -36,7 +36,16 @@
       box-shadow: 0 15px 30px rgba(0,0,0,0.2);
       width: 320px;
     }
-
+#tease {
+  position: absolute;
+  top: -35px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #ff4d6d;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
     h1 {
       color: #ff4d6d;
     }
@@ -104,9 +113,10 @@
     <h1>Srushti, will you be my Valentine? 💘</h1>
 
     <div class="buttons">
-      <button id="no">No 🙃</button>
-      <button id="yes">Yes ❤️</button>
-    </div>
+  <div id="tease">Are you sure? 🥺</div>
+  <button id="no">No 🙃</button>
+  <button id="yes">Yes ❤️</button>
+</div>
 
     <div class="message" id="message">
       YAYYY 💕 I knew you’d say yes 😌💘
@@ -125,16 +135,27 @@
   const sound = document.getElementById("yesSound");
   const card = document.querySelector(".card");
 
-  noBtn.addEventListener("mouseover", () => {
-    // Shake the card
-    card.classList.add("shake");
-    setTimeout(() => card.classList.remove("shake"), 400);
+  const tease = document.getElementById("tease");
+let teaseCount = 0;
 
-    // Move the "No" button
-    const x = Math.random() * 200 - 100;
-    const y = Math.random() * 100 - 50;
-    noBtn.style.transform = `translate(${x}px, ${y}px)`;
-  });
+noBtn.addEventListener("mouseover", () => {
+  // Show teasing text
+  tease.style.opacity = 1;
+
+  teaseCount++;
+  if (teaseCount > 2) {
+    tease.textContent = "Absolutely sure?? 😭";
+  }
+
+  // Shake the card
+  card.classList.add("shake");
+  setTimeout(() => card.classList.remove("shake"), 400);
+
+  // Move the No button
+  const x = Math.random() * 200 - 100;
+  const y = Math.random() * 100 - 50;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+});
 
   yesBtn.addEventListener("click", () => {
     message.style.display = "block";
